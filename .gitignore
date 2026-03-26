@@ -1,0 +1,33 @@
+# Compiled files
+*.class
+*.log
+
+# Build folders
+target/
+build/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+
+# Node (if any)
+node_modules/
+
+# Logs
+logs/
+
+# Temp
+*.tmp
+
+# Tomcat
+bin/
+temp/
+work/
