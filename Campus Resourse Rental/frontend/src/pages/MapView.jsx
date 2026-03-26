@@ -58,7 +58,7 @@ export default function MapView() {
 
   const selected = useMemo(() => items.find(i => i.itemId === selectedId), [items, selectedId]);
   const center   = useMemo(() => {
-    if (items.length === 0) return [40.7128, -74.006]; // NYC fallback
+    if (items.length === 0) return [18.5204, 73.8567]; // NYC fallback
     const avgLat = items.reduce((s, i) => s + i.latitude,  0) / items.length;
     const avgLng = items.reduce((s, i) => s + i.longitude, 0) / items.length;
     return [avgLat, avgLng];
@@ -114,7 +114,7 @@ export default function MapView() {
               </div>
             </div>
           ) : (
-            <MapContainer center={center} zoom={15} className="h-full w-full z-0"
+            <MapContainer center={center} zoom={13} className="h-full w-full z-0"
               style={{ background: '#f5f5f4' }}>
               <TileLayer
                 url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"

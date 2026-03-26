@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // ── Category ─────────────────────────────────────────────────
 @Entity
@@ -34,6 +35,7 @@ public class Category {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Item> items;
 }

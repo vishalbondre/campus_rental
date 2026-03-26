@@ -31,7 +31,7 @@ function LocationPicker({ value, onChange }) {
 export default function CreateListing() {
   const navigate = useNavigate();
   const [step,      setStep]      = useState(0);
-  const [location,  setLocation]  = useState(null);
+  const [location,  setLocation]  = useState({lat: 18.5204,lng: 73.8567});
   const [images,    setImages]    = useState([]);
   const [tagInput,  setTagInput]  = useState('');
   const [tags,      setTags]      = useState([]);
@@ -60,7 +60,7 @@ export default function CreateListing() {
     if (!location) { toast.error('Please pin your item location on the map'); setStep(2); return; }
     const fd = new FormData();
     const itemPayload = {
-      ...data, latitude: location.lat, longitude: location.lng,
+      ...data, categoryId:parseInt(data.categoryId), latitude: location.lat, longitude: location.lng,
       dailyPrice: parseFloat(data.dailyPrice),
       securityDeposit: parseFloat(data.securityDeposit || 0),
       tags,
@@ -226,7 +226,7 @@ export default function CreateListing() {
               <label className="label">Pin on Campus Map</label>
               <p className="text-xs text-stone-500 mb-2">Click on the map to set the handoff location</p>
               <div className="rounded-2xl overflow-hidden border border-stone-200 h-72">
-                <MapContainer center={[40.7128, -74.006]} zoom={16} className="h-full w-full">
+                <MapContainer center={[18.5204, 73.8567]} zoom={16} className="h-full w-full">
                   <TileLayer
                     url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                     attribution='&copy; OSM &copy; CARTO'
