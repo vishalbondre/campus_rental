@@ -108,7 +108,7 @@ export default function ItemDetail() {
                 </h1>
               </div>
               <div className="text-right shrink-0">
-                <div className="text-3xl font-black text-stone-900">${item.dailyPrice}</div>
+                <div className="text-3xl font-black text-stone-900">₹{item.dailyPrice}</div>
                 <div className="text-xs text-stone-400 font-medium">per day</div>
               </div>
             </div>
@@ -180,11 +180,11 @@ export default function ItemDetail() {
           <div className="bg-white rounded-2xl border border-stone-200 shadow-lg overflow-hidden">
             <div className="bg-stone-900 text-white p-5">
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-black">${item.dailyPrice}</span>
+                <span className="text-3xl font-black">₹{item.dailyPrice}</span>
                 <span className="text-stone-400 text-sm">/ day</span>
               </div>
               {item.securityDeposit > 0 && (
-                <p className="text-stone-400 text-xs mt-1">+ ${item.securityDeposit} security deposit</p>
+                <p className="text-stone-400 text-xs mt-1">+ ₹{item.securityDeposit} security deposit</p>
               )}
             </div>
 
@@ -220,18 +220,18 @@ export default function ItemDetail() {
               {days > 0 && (
                 <div className="bg-stone-50 rounded-xl p-4 space-y-2 text-sm">
                   <div className="flex justify-between text-stone-600">
-                    <span>${item.dailyPrice} × {days} day{days > 1 ? 's' : ''}</span>
-                    <span>${totalRental.toFixed(2)}</span>
+                    <span>₹{item.dailyPrice} × {days} day{days > 1 ? 's' : ''}</span>
+                    <span>₹{totalRental.toFixed(2)}</span>
                   </div>
                   {item.securityDeposit > 0 && (
                     <div className="flex justify-between text-stone-600">
                       <span>Security deposit</span>
-                      <span>${item.securityDeposit}</span>
+                      <span>₹{item.securityDeposit}</span>
                     </div>
                   )}
                   <div className="flex justify-between font-bold text-stone-900 pt-2 border-t border-stone-200">
                     <span>Total</span>
-                    <span>${totalWithDep.toFixed(2)}</span>
+                    <span>₹{totalWithDep.toFixed(2)}</span>
                   </div>
                 </div>
               )}

@@ -20,12 +20,12 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
         JOIN FETCH i.owner o
         JOIN FETCH i.category c
         WHERE i.status = 'AVAILABLE'
-          AND (:categoryId IS NULL OR c.categoryId = :categoryId)
-          AND (:campus    IS NULL OR i.campusName LIKE %:campus%)
-          AND (:minPrice  IS NULL OR i.dailyPrice >= :minPrice)
-          AND (:maxPrice  IS NULL OR i.dailyPrice <= :maxPrice)
-          AND (:search    IS NULL OR LOWER(i.title) LIKE LOWER(CONCAT('%',:search,'%'))
-                                  OR LOWER(i.description) LIKE LOWER(CONCAT('%',:search,'%')))
+        AND (:categoryId IS NULL OR c.categoryId = :categoryId)
+        AND (:campus    IS NULL OR i.campusName LIKE %:campus%)
+        AND (:minPrice  IS NULL OR i.dailyPrice >= :minPrice)
+        AND (:maxPrice  IS NULL OR i.dailyPrice <= :maxPrice)
+        AND (:search    IS NULL OR LOWER(i.title) LIKE LOWER(CONCAT('%',:search,'%'))
+        OR LOWER(i.description) LIKE LOWER(CONCAT('%',:search,'%')))
         """)
     Page<Item> searchAvailable(
         @Param("categoryId") Long categoryId,
@@ -40,13 +40,29 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
         SELECT i FROM Item i
         JOIN FETCH i.category c
         WHERE i.status = 'AVAILABLE'
-          AND (:campus     IS NULL OR i.campusName LIKE %:campus%)
-          AND (:categoryId IS NULL OR c.categoryId = :categoryId)
+        AND (:campus     IS NULL OR i.campusName LIKE %:campus%)
+        AND (:categoryId IS NULL OR c.categoryId = :categoryId)
         """)
     List<Item> findForMap(@Param("campus") String campus,
-                          @Param("categoryId") Long categoryId);
+                        @Param("categoryId") Long categoryId);  
 
+    @Query("""
+        SELECT i FROM Item i
+        JOIN FETCH i.owner o
+        JOIN FETCH i.category c
+        WHERE o.emailId = :email
+        ORDER BY i.createdAt DESC
+    """)
     List<Item> findByOwner_EmailIdOrderByCreatedAtDesc(String email);
+
+    @Query("""
+    SELECT i FROM Item i
+    JOIN FETCH i.owner o
+    JOIN FETCH i.category c
+    WHERE i.itemId = :itemId
+    """)
+Optional<Item> findByIdWithOwnerAndCategory(@Param("itemId") Long itemId);
+
 
     @Modifying
     @Query("UPDATE Item i SET i.viewCount = i.viewCount + 1 WHERE i.itemId = :id")
@@ -56,11 +72,12 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("""
         SELECT COUNT(t) FROM RentalTransaction t
         WHERE t.item.itemId = :itemId
-          AND t.status IN ('APPROVED','ACTIVE')
-          AND NOT (t.endDate < :startDate OR t.startDate > :endDate)
+        AND t.status IN ('APPROVED','ACTIVE')
+        AND NOT (t.endDate < :startDate OR t.startDate > :endDate)
         """)
     long countOverlappingTransactions(
         @Param("itemId")    Long itemId,
         @Param("startDate") java.time.LocalDate startDate,
         @Param("endDate")   java.time.LocalDate endDate);
 }
+

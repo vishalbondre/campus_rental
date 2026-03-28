@@ -81,14 +81,14 @@ export default function Register() {
             <div>
               <label className="block text-sm font-semibold text-stone-700 mb-1.5">Full Name</label>
               <input type="text" value={form.fullName} onChange={handle('fullName')} required
-                placeholder="Alex Johnson"
+                placeholder="Om Baviskar"
                 className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-stone-400" />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-stone-700 mb-1.5">Campus Email</label>
               <input type="email" value={form.emailId} onChange={handle('emailId')} required
-                placeholder="alex@university.edu"
+                placeholder="omb@mespune.in"
                 className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-stone-400" />
               <p className="text-xs text-stone-400 mt-1">Enter any valid email</p>
             </div>
@@ -96,7 +96,7 @@ export default function Register() {
             <div>
               <label className="block text-sm font-semibold text-stone-700 mb-1.5">University / College Name</label>
               <input type="text" value={form.campusName} onChange={handle('campusName')} required
-                placeholder="MIT, Stanford, IIT Delhi…"
+                placeholder="MES-Pune,MIT-WPU,D.Y.Patil"
                 className="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-stone-400" />
             </div>
 

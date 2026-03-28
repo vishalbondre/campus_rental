@@ -43,8 +43,14 @@ export default function Dashboard() {
     () => api.get('/transactions/as-borrower').then(r => r.data.data));
   const { data: lendings  = [] } = useQuery('lendings',
     () => api.get('/transactions/as-owner').then(r => r.data.data));
-  const { data: listings  = [] } = useQuery('my-listings',
-    () => api.get('/items/my').then(r => r.data.data));
+  const { data: listings = [], error: listingsError } = useQuery(
+    'my-listings',
+    () => api.get('/items/my').then(r => r.data.data),
+    {
+        onError: (err) => console.error('Listings error:', err),
+        onSuccess: (data) => console.log('Listings loaded:', data)
+    }
+);
 
   const { mutate: respondToRequest } = useMutation(
     ({ id, action }) => api.patch(`/transactions/${id}/respond?action=${action}`),
@@ -258,7 +264,7 @@ function TransactionList({ transactions, emptyMsg, emptyAction, renderActions })
                   {format(new Date(tx.startDate), 'MMM d')} – {format(new Date(tx.endDate), 'MMM d, yyyy')}
                 </p>
                 <div className="flex items-center gap-3 mt-1 flex-wrap">
-                  <span className="text-sm font-bold text-stone-900">${tx.totalAmount}</span>
+                  <span className="text-sm font-bold text-stone-900">₹{tx.totalAmount}</span>
                   {tx.securityDeposit > 0 && (
                     <span className="inline-flex items-center gap-1 text-xs text-stone-500">
                       <Shield size={11} /> ${tx.securityDeposit} deposit

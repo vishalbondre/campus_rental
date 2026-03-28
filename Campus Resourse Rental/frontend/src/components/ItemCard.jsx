@@ -74,7 +74,7 @@ export default function ItemCard({ item }) {
         {/* Footer row */}
         <div className="flex items-end justify-between">
           <div>
-            <span className="text-lg font-black text-stone-900">${dailyPrice}</span>
+            <span className="text-lg font-black text-stone-900">₹{dailyPrice}</span>
             <span className="text-xs text-stone-400 font-medium">/day</span>
           </div>
           <div className="flex items-center gap-1 text-stone-500 text-xs">

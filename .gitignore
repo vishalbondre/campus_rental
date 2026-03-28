@@ -2,6 +2,8 @@
 *.class
 *.log
 
+application.properties
+uploads/
 # Build folders
 target/
 build/

@@ -26,6 +26,7 @@ public class ItemService {
     @Value("${app.upload.dir}")
     private String uploadDir;
 
+    @Transactional(readOnly = true) 
     public Page<ItemSummaryDTO> searchItems(Long categoryId, String campus,
             BigDecimal minPrice, BigDecimal maxPrice, String search, Pageable pageable) {
         return itemRepo.searchAvailable(categoryId, campus, minPrice, maxPrice, search, pageable)
@@ -42,6 +43,7 @@ public class ItemService {
             .toList();
     }
 
+    @Transactional(readOnly = true)
     public ItemDetailDTO getItemDetail(Long id) {
         Item item = itemRepo.findById(id)
             .orElseThrow(() -> new NoSuchElementException("Item not found: " + id));
@@ -103,6 +105,7 @@ public class ItemService {
         itemRepo.save(item);
     }
 
+    @Transactional(readOnly = true)
     public List<ItemSummaryDTO> getOwnerItems(String email) {
         return itemRepo.findByOwner_EmailIdOrderByCreatedAtDesc(email)
             .stream().map(this::toSummaryDTO).toList();

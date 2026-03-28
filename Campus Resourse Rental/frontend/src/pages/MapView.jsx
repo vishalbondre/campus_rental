@@ -173,7 +173,7 @@ export default function MapView() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-stone-900 truncate">{item.title}</p>
-                      <p className="text-xs text-amber-600 font-medium">${item.dailyPrice}/day</p>
+                      <p className="text-xs text-amber-600 font-medium">₹{item.dailyPrice}/day</p>
                       <p className="text-xs text-stone-400 truncate mt-0.5">
                         <MapPin size={10} className="inline mr-0.5" />{item.locationLabel || '—'}
                       </p>

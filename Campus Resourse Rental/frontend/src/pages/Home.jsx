@@ -102,12 +102,12 @@ export default function Home() {
               <div>
                 <label className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1 block">Min Price/day</label>
                 <input type="number" value={minPrice} onChange={e => { setMinPrice(e.target.value); setPage(0); }}
-                  placeholder="$0" className="w-24 px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                  placeholder="₹0" className="w-24 px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
               </div>
               <div>
                 <label className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1 block">Max Price/day</label>
                 <input type="number" value={maxPrice} onChange={e => { setMaxPrice(e.target.value); setPage(0); }}
-                  placeholder="$100" className="w-24 px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+                  placeholder="₹100" className="w-24 px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
               </div>
               <div>
                 <label className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1 block">Sort by</label>

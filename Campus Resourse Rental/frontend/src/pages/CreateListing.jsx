@@ -56,19 +56,33 @@ export default function CreateListing() {
     }
   );
 
-  const onFinalSubmit = (data) => {
-    if (!location) { toast.error('Please pin your item location on the map'); setStep(2); return; }
+const onFinalSubmit = (data) => {
+    // Guard — only submit on the last step
+    if (step !== STEPS.length - 1) {
+        setStep(s => s + 1);
+        return;
+    }
+
+    if (!location) {
+        toast.error('Please pin your item location on the map');
+        setStep(2);
+        return;
+    }
+
     const fd = new FormData();
     const itemPayload = {
-      ...data, categoryId:parseInt(data.categoryId), latitude: location.lat, longitude: location.lng,
-      dailyPrice: parseFloat(data.dailyPrice),
-      securityDeposit: parseFloat(data.securityDeposit || 0),
-      tags,
+        ...data,
+        categoryId:      parseInt(data.categoryId),
+        latitude:        location.lat,
+        longitude:       location.lng,
+        dailyPrice:      parseFloat(data.dailyPrice),
+        securityDeposit: parseFloat(data.securityDeposit || 0),
+        tags,
     };
     fd.append('item', new Blob([JSON.stringify(itemPayload)], { type: 'application/json' }));
     images.forEach(f => fd.append('images', f));
     submit(fd);
-  };
+};
 
   const addTag = (e) => {
     if (e.key === 'Enter' && tagInput.trim()) {
@@ -183,7 +197,7 @@ export default function CreateListing() {
                 <DollarSign size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
                 <input type="number" step="0.01" min="0.50"
                   {...register('dailyPrice', { required: 'Price required', min: { value: 0.5, message: 'Min $0.50' }})}
-                  placeholder="5.00" className="input pl-9" />
+                  placeholder="500" className="input pl-9" />
               </div>
               {errors.dailyPrice && <p className="error">{errors.dailyPrice.message}</p>}
             </div>
@@ -197,7 +211,7 @@ export default function CreateListing() {
                 <DollarSign size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
                 <input type="number" step="0.01" min="0"
                   {...register('securityDeposit')}
-                  placeholder="0.00" className="input pl-9" />
+                  placeholder="0" className="input pl-9" />
               </div>
             </div>
 
@@ -288,24 +302,33 @@ export default function CreateListing() {
 
         {/* Navigation buttons */}
         <div className="flex gap-3 mt-8 pt-6 border-t border-stone-100">
-          {step > 0 && (
-            <button type="button" onClick={() => setStep(s => s - 1)}
-              className="flex-1 py-3 border border-stone-200 rounded-xl text-sm font-medium text-stone-600 hover:bg-stone-50 transition-all">
-              Back
-            </button>
-          )}
-          {step < STEPS.length - 1 ? (
-            <button type="button" onClick={() => setStep(s => s + 1)}
-              className="flex-1 flex items-center justify-center gap-2 bg-stone-900 hover:bg-stone-800 text-white font-semibold py-3 rounded-xl text-sm transition-all">
-              Continue <ChevronRight size={16} />
-            </button>
-          ) : (
-            <button type="submit" disabled={isLoading}
-              className="flex-1 bg-amber-400 hover:bg-amber-500 disabled:opacity-50 text-stone-900 font-bold py-3 rounded-xl text-sm transition-all">
-              {isLoading ? 'Publishing…' : '🚀 Publish Listing'}
-            </button>
-          )}
-        </div>
+    {step > 0 && (
+        <button
+            type="button"
+            onClick={() => setStep(s => s - 1)}
+            className="flex-1 py-3 border border-stone-200 rounded-xl text-sm font-medium text-stone-600 hover:bg-stone-50 transition-all">
+            Back
+        </button>
+    )}
+    {step < STEPS.length - 1 ? (
+        <button
+            type="button"
+            onClick={(e) => {
+                e.preventDefault();
+                setStep(s => s + 1);
+            }}
+            className="flex-1 flex items-center justify-center gap-2 bg-stone-900 hover:bg-stone-800 text-white font-semibold py-3 rounded-xl text-sm transition-all">
+            Continue
+        </button>
+    ) : (
+        <button
+            type="submit"
+            disabled={isLoading}
+            className="flex-1 bg-amber-400 hover:bg-amber-500 disabled:opacity-50 text-stone-900 font-bold py-3 rounded-xl text-sm transition-all">
+            {isLoading ? 'Publishing…' : 'Publish Listing'}
+        </button>
+    )}
+</div>
       </form>
     </main>
   );
