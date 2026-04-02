@@ -2,8 +2,10 @@
 *.class
 *.log
 
-application.properties
+Campus Resourse Rental/backend/src/main/resources/application.properties
 uploads/
+resources/
+
 # Build folders
 target/
 build/

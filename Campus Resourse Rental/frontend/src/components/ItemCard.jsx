@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Star, Shield } from 'lucide-react';
 import clsx from 'clsx';
+import { getImageUrl } from '../utils/imageUrl';
 
 const CONDITION_COLORS = {
   EXCELLENT: 'bg-emerald-100 text-emerald-700',
@@ -18,6 +19,7 @@ export default function ItemCard({ item }) {
     campusName, imageUrl, createdAt,
   } = item;
 
+  const resolvedImage = getImageUrl(imageUrl);
   const isAvailable = status === 'AVAILABLE';
 
   return (
@@ -26,9 +28,12 @@ export default function ItemCard({ item }) {
 
       {/* Image */}
       <div className="relative aspect-[4/3] bg-stone-100 overflow-hidden">
-        {imageUrl ? (
-          <img src={imageUrl} alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+        {resolvedImage ? (                        // ← use resolvedImage
+          <img
+            src={resolvedImage}
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
         ) : (
           <div className="w-full h-full grid place-items-center text-stone-300 text-5xl">📦</div>
         )}

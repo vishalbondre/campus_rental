@@ -11,6 +11,7 @@ import {
   User, Tag, Eye, Clock, AlertCircle
 } from 'lucide-react';
 import clsx from 'clsx';
+import { getImageUrl } from '../utils/imageUrl';
 
 const CONDITION_LABELS = { EXCELLENT: '✨ Excellent', GOOD: '👍 Good', FAIR: '⚠️ Fair', POOR: '❌ Poor' };
 
@@ -78,7 +79,7 @@ export default function ItemDetail() {
           {/* Image gallery */}
           <div className="rounded-2xl overflow-hidden bg-stone-100 aspect-[4/3] mb-3">
             {item.imageUrls?.length > 0 ? (
-              <img src={item.imageUrls[activeImg]} alt={item.title}
+              <img src={getImageUrl(item.imageUrls[activeImg])} alt={item.title}
                 className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full grid place-items-center text-7xl">📦</div>
@@ -90,7 +91,7 @@ export default function ItemDetail() {
                 <button key={i} onClick={() => setActiveImg(i)}
                   className={clsx('shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all',
                     i === activeImg ? 'border-amber-400' : 'border-transparent opacity-60 hover:opacity-100')}>
-                  <img src={url} className="w-full h-full object-cover" />
+                  <img src={getImageUrl(url)} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
