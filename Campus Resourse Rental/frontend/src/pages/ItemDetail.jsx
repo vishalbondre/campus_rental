@@ -124,7 +124,7 @@ export default function ItemDetail() {
               </span>
               {item.securityDeposit > 0 && (
                 <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 text-xs font-medium px-3 py-1.5 rounded-full border border-amber-200">
-                  <Shield size={12} /> ${item.securityDeposit} deposit
+                  <Shield size={12} /> ₹{item.securityDeposit} deposit
                 </span>
               )}
               <span className={clsx('inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full',

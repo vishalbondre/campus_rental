@@ -10,6 +10,7 @@ import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { Upload, X, MapPin, DollarSign, Tag, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
+import { IndianRupee } from "lucide-react";
 
 // Fix Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -192,11 +193,11 @@ const onFinalSubmit = (data) => {
         {step === 1 && (
           <div className="space-y-5">
             <div>
-              <label className="label">Daily Rental Price ($)</label>
+              <label className="label">Daily Rental Price (₹)</label>
               <div className="relative">
-                <DollarSign size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+                <IndianRupee size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"/>
                 <input type="number" step="0.01" min="0.50"
-                  {...register('dailyPrice', { required: 'Price required', min: { value: 0.5, message: 'Min $0.50' }})}
+                  {...register('dailyPrice', { required: 'Price required', min: { value: 0.5, message: 'Min ₹0.50' }})}
                   placeholder="500" className="input pl-9" />
               </div>
               {errors.dailyPrice && <p className="error">{errors.dailyPrice.message}</p>}
@@ -204,11 +205,11 @@ const onFinalSubmit = (data) => {
 
             <div>
               <label className="label">
-                Security Deposit ($)
+                Security Deposit (₹)
                 <span className="ml-1 text-stone-400 font-normal">— optional, returned after rental</span>
               </label>
               <div className="relative">
-                <DollarSign size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+                <IndianRupee size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"/>
                 <input type="number" step="0.01" min="0"
                   {...register('securityDeposit')}
                   placeholder="0" className="input pl-9" />

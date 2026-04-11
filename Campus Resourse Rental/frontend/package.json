@@ -25,7 +25,7 @@
     "vite": "^5.3.1"
   },
   "scripts": {
-    "dev": "vite",
+    "vish": "vite",
     "build": "vite build",
     "preview": "vite preview"
   }

@@ -194,7 +194,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-stone-900 truncate">{item.title}</p>
-                    <p className="text-sm text-amber-600 font-medium">${item.dailyPrice}/day</p>
+                    <p className="text-sm text-amber-600 font-medium">₹{item.dailyPrice}/day</p>
                     <div className="flex items-center gap-2 mt-2">
                       <span className={clsx('text-xs font-medium px-2 py-0.5 rounded-full border',
                         STATUS_STYLES[item.status] || STATUS_STYLES.PENDING)}>
@@ -267,7 +267,7 @@ function TransactionList({ transactions, emptyMsg, emptyAction, renderActions })
                   <span className="text-sm font-bold text-stone-900">₹{tx.totalAmount}</span>
                   {tx.securityDeposit > 0 && (
                     <span className="inline-flex items-center gap-1 text-xs text-stone-500">
-                      <Shield size={11} /> ${tx.securityDeposit} deposit
+                      <Shield size={11} /> ₹{tx.securityDeposit} deposit
                       {tx.depositReturned && <span className="text-emerald-600 font-medium"> (returned)</span>}
                     </span>
                   )}
