@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 import {
   Package, ArrowDownCircle, ArrowUpCircle, Star,
   CheckCircle2, XCircle, Clock, AlertTriangle,
-  Plus, ChevronRight, Shield, RotateCcw
+  Plus, ChevronRight, Shield, RotateCcw, History
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -17,6 +17,7 @@ const TABS = [
   { id: 'borrowing', label: 'I\'m Borrowing', icon: ArrowDownCircle },
   { id: 'lending',   label: 'I\'m Lending',   icon: ArrowUpCircle  },
   { id: 'listings',  label: 'My Listings',    icon: Package        },
+  { id: 'lending-history', label: 'Lending History', icon: History },
 ];
 
 const STATUS_STYLES = {
@@ -38,6 +39,11 @@ export default function Dashboard() {
   const [tab, setTab] = useState('borrowing');
   const [reviewingTx, setReviewingTx] = useState(null);
   const qc = useQueryClient();
+
+  const { data: lendingHistory = [] } = useQuery(
+  'lending-history',
+  () => api.get('/transactions/lending-history').then(r => r.data.data)
+);
 
   const { data: borrowals = [] } = useQuery('borrowals',
     () => api.get('/transactions/as-borrower').then(r => r.data.data));
@@ -219,6 +225,14 @@ export default function Dashboard() {
             </div>
           )}
         </div>
+      )}
+
+      {tab === 'lending-history' && (
+      <TransactionList
+        transactions={lendingHistory}
+        emptyMsg="No lending history found."
+        emptyAction={{ to: '/list-item', label: 'List an item' }}
+      />
       )}
 
       {/* Review modal */}

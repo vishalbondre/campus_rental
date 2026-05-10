@@ -21,8 +21,8 @@ public interface RentalTransactionRepository extends JpaRepository<RentalTransac
     // WHERE t.borrower.emailId = :email
     // ORDER BY t.createdAt DESC
     // """)
-    List<RentalTransaction> findByBorrower_EmailIdOrderByCreatedAtDesc(
-            @Param("email") String email);
+        List<RentalTransaction> findByBorrower_EmailIdOrderByCreatedAtDesc(
+                @Param("email") String email);
 
     // @Query("""
     // SELECT t FROM RentalTransaction t
@@ -33,23 +33,35 @@ public interface RentalTransactionRepository extends JpaRepository<RentalTransac
     // WHERE t.owner.emailId = :email
     // ORDER BY t.createdAt DESC
     // """)
-    List<RentalTransaction> findByOwner_EmailIdOrderByCreatedAtDesc(
-            @Param("email") String email);
+        List<RentalTransaction> findByOwner_EmailIdOrderByCreatedAtDesc(
+                @Param("email") String email);
 
-    @Query("SELECT t FROM RentalTransaction t WHERE t.status = 'DISPUTED' AND t.disputeResolved = false")
-    Page<RentalTransaction> findOpenDisputes(Pageable pageable);
+        @Query("SELECT t FROM RentalTransaction t WHERE t.status = 'DISPUTED' AND t.disputeResolved = false")
+        Page<RentalTransaction> findOpenDisputes(Pageable pageable);
 
-    @Query("""
-            SELECT t FROM RentalTransaction t
-            WHERE (:status IS NULL OR CAST(t.status AS string) = :status)
-            ORDER BY t.createdAt DESC
-            """)
-    Page<RentalTransaction> findAllByStatus(@Param("status") String status, Pageable pageable);
+        @Query("""
+                SELECT t FROM RentalTransaction t
+                WHERE (:status IS NULL OR CAST(t.status AS string) = :status)
+                ORDER BY t.createdAt DESC
+                """)
+        Page<RentalTransaction> findAllByStatus(@Param("status") String status, Pageable pageable);
 
-    @Query("SELECT COUNT(t) FROM RentalTransaction t WHERE t.status = :status")
-    long countByStatus(@Param("status") RentalTransaction.Status status);
+        @Query("SELECT COUNT(t) FROM RentalTransaction t WHERE t.status = :status")
+        long countByStatus(@Param("status") RentalTransaction.Status status);
 
-    @Query("SELECT COUNT(t) FROM RentalTransaction t " +
-            "WHERE t.status = 'DISPUTED' AND t.disputeResolved = false")
-    long countOpenDisputes();
+        @Query("SELECT COUNT(t) FROM RentalTransaction t " +
+                "WHERE t.status = 'DISPUTED' AND t.disputeResolved = false")
+        long countOpenDisputes();
+
+        // Lending history update here ...
+        @Query("""
+        SELECT t FROM RentalTransaction t
+        JOIN FETCH t.item i
+        JOIN FETCH t.borrower b
+        JOIN FETCH t.owner o
+        WHERE t.owner.emailId = :email
+        AND t.status IN ('ACTIVE', 'COMPLETED', 'DISPUTED')
+        ORDER BY t.createdAt DESC
+        """)
+        List<RentalTransaction> findLendingHistoryByOwner(@Param("email") String email);
 }

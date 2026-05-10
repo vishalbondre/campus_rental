@@ -89,4 +89,12 @@ public class TransactionController {
         return ResponseEntity.ok(ApiResponse.success("Transaction details",
             rentalService.getTransaction(principal.getUsername(), id)));
     }
+
+    // Lending history v1.0
+    @GetMapping("/lending-history")
+    public ResponseEntity<ApiResponse<List<TransactionDTO>>> lendingHistory(
+        @AuthenticationPrincipal UserDetails principal) {
+    return ResponseEntity.ok(ApiResponse.success("Lending history",
+        rentalService.getLendingHistory(principal.getUsername())));
+}
 }

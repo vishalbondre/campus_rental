@@ -115,6 +115,13 @@ public class RentalService {
                 .stream().map(this::toDTO).toList();
     }
 
+    // Transaction history changes
+    @Transactional(readOnly = true)
+    public List<TransactionDTO> getLendingHistory(String ownerEmail) {
+    return txRepo.findLendingHistoryByOwner(ownerEmail)
+        .stream().map(this::toDTO).toList();
+}
+
     public TransactionDTO getTransaction(String email, Long txId) {
         RentalTransaction tx = txRepo.findById(txId).orElseThrow();
         boolean isParty = tx.getBorrower().getEmailId().equals(email)

@@ -228,8 +228,11 @@ function AdminDisputes() {
     () => api.get('/admin/disputes').then(r => r.data.data));
 
   const { mutate: resolve } = useMutation(
-    ({ txId, resolution }) => api.patch(`/admin/disputes/${txId}/resolve`,
-      null, { params: { resolution, resolvedByUserId: 1 }}),
+    ({ txId, resolution }) => api.patch(
+    `/admin/disputes/${txId}/resolve`,
+    {},
+    { params: { resolution, resolvedByUserId: 1 } }
+  ),
     { onSuccess: () => { qc.invalidateQueries('admin-disputes'); toast.success('Dispute resolved'); } }
   );
 
